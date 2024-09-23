@@ -1,10 +1,9 @@
 name: Generate daily snapshot
 
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '00 0 * * *'
-  workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   cancel_previous:
@@ -24,9 +23,6 @@ jobs:
     steps:
       - name: Checkout develop
         uses: actions/checkout@v3
-        with:
-          ref: develop
-          fetch-depth: 0 # Whole repo history
 
       - name: Fetch all tags
         run: git fetch origin +refs/tags/*:refs/tags/*
