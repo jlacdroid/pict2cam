@@ -3,7 +3,7 @@ name: Generate daily snapshot
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   cancel_previous:
@@ -23,6 +23,9 @@ jobs:
     steps:
       - name: Checkout develop
         uses: actions/checkout@v3
+        with:
+          ref: develop
+          fetch-depth: 0 # Whole repo history
 
       - name: Fetch all tags
         run: git fetch origin +refs/tags/*:refs/tags/*
